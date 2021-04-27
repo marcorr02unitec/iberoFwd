@@ -4,8 +4,6 @@ export type ClusterDocument = Cluster & Document;
 const ObjectId = require('mongodb').ObjectId;
 @Schema()
 export class Cluster {
-    @Prop({ type: ObjectId })
-    userId: string;
     @Prop({ required: true })
     nombre: string;
     @Prop({ required: false })

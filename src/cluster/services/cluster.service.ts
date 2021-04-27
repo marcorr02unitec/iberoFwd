@@ -13,25 +13,16 @@ export class ClusterService {
 
 
     async save(Cluster: Icluster) {
-        /*  try {
-            console.log('user', user)
-            const salt = await genSalt(10);
-            let password: any = await hash(user.password, salt);
-            user.password = password;
-            const createdUser = new this.userModel(user);
+        try {
+            const createdUser = new this.clusterModel(Cluster);
             let userSaved = await createdUser.save();
-            let statistic: Istatistic = {
-              type: eTypeStatistics.registro,
-              userId: userSaved._id
-            }
-      
-            await this.statisticService.save(userSaved._id, statistic);
             return userSaved;
-          } catch (error) {
+        } catch (error) {
             console.log('errr', error)
             let message = error._message ?? error.toString()
             return { error: message }
-          */ }
+        }
+    }
 
     async getCluster(): Promise<ClusterDocument[]> {
         try {
@@ -43,25 +34,41 @@ export class ClusterService {
         }
     }
 
-    async update(statisticObject: any): Promise<any> {
-        /*try {
-            let statistic: any = await this.statisticModel.findOne({ "_id": ObjectId(statisticObject.statisticId) });
-            let fecha1: Date = moment(statistic.createdAt);
-            if (statistic) {
-                statistic.finishedAt = Date.now();
-                let fecha2: any = moment(statistic.finishedAt);
-                statistic.minutes = fecha2.diff(fecha1, 'minutes');
-                return await this.statisticModel.findOneAndUpdate({ "_id": statisticObject.statisticId }, {
-                    finishedAt: statistic.finishedAt,
-                    minutes: statistic.minutes
+    async updateCluster(statisticObject: any, clus: any): Promise<any> {
+        try {
+            let cluster: any = await this.clusterModel.findOne({ "nombre": clus });
+            if (cluster) {
+
+                await this.clusterModel.findOneAndUpdate({ "nombre": clus }, {
+                    nombre: statisticObject.nombre,
+                    descripcionGeneral: statisticObject.descripcionGeneral,
+                    descripcionEspecifica: statisticObject.descripcionEspecifica,
+                    imagen: statisticObject.imagen
                 });
+                cluster = await this.clusterModel.findOne({ "nombre": clus });
+                return cluster;
             } else {
-                return { error: 'Resource not found' };
+                return { error: 'Este Cluster no existe' };
             }
         } catch (error) {
             let message = error._message ?? error.toString()
             return { error: message }
-        }*/
+        }
+    }
+
+    async deleteCluster(clus: any): Promise<any> {
+        try {
+            let cluster: any = await this.clusterModel.findOne({ "nombre": clus });
+            if (cluster) {
+                await this.clusterModel.deleteOne({"nombre": clus});
+                return "cluster eliminado";
+            } else {
+                return { error: 'Este Cluster no existe' };
+            }
+        } catch (error) {
+            let message = error._message ?? error.toString()
+            return { error: message }
+        }
     }
 
 }

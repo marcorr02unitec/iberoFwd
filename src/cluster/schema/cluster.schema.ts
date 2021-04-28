@@ -1,8 +1,9 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+/*import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 export type ClusterDocument = Cluster & Document;
 const ObjectId = require('mongodb').ObjectId;
 @Schema()
+
 export class Cluster {
     @Prop({ required: true })
     nombre: string;
@@ -20,4 +21,4 @@ export class Cluster {
     
 }
 
-export const ClusterSchema = SchemaFactory.createForClass(Cluster);
+export const ClusterSchema = SchemaFactory.createForClass(Cluster);*/
